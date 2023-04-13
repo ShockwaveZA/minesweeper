@@ -1,0 +1,73 @@
+@mixin cell-color($mine-count) {
+  //@debug 100% / (8 / $mine-count);
+  background-color: lighten(mix(red, green, calc(100% / (8 / $mine-count))), 20%);
+}
+
+.cell-color-0 { background-color: white };
+
+@mixin cell-color-x {
+  @for $i from 1 through 8 {
+    .cell-color-#{$i} { @include cell-color($i) }
+  }
+}
+
+@include cell-color-x;
+
+.info {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+
+  .count {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin-left: auto;
+
+    img {
+      height: 14px;
+    }
+  }
+}
+
+.Board {
+  .container {
+    border: 1px solid black;
+    border-radius: 25px;
+    padding: 10px;
+
+    .row {
+      display: flex;
+
+      .cell {
+        display: flex;
+        height: 25px;
+        width: 25px;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+
+        &.hidden {
+          background-color: grey;
+
+          &:hover {
+            background-color: lighten(grey, 10%);
+          }
+        }
+
+        .flag {
+          height: 70%;
+        }
+
+        .mine {
+          height: 70%;
+          //background-color: red;
+        }
+
+        &:has(.mine) {
+          background-color: red;
+        }
+      }
+    }
+  }
+}
